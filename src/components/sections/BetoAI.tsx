@@ -50,9 +50,9 @@ export default function BetoAI() {
       <div className="pointer-events-none absolute top-1/2 right-[18%] size-[520px] -translate-y-1/2 rounded-full bg-orange/10 blur-[120px]" />
       <div className="relative flex flex-col gap-14 lg:flex-row lg:items-center lg:gap-20">
         <div className="flex flex-col gap-6 lg:w-[46%]">
-          <Eyebrow>04 — Beto AI · the AI in this POS</Eyebrow>
+          <Eyebrow>04 — Beto POS AI</Eyebrow>
           <h2 className="poster text-[42px] leading-[1.2] sm:text-[60px] lg:text-[72px]">Ask your chain anything.</h2>
-          <p className="max-w-[440px] text-[17px] leading-7 text-[#bdb3a6]">Beto reads every store&apos;s live sales, stock and settlements. Head office and franchise owners get answers, not spreadsheets.</p>
+          <p className="max-w-[440px] text-[17px] leading-7 text-[#bdb3a6]">Beto POS AI reads every store&apos;s live sales, stock and settlements. Head office and franchise owners get answers, not spreadsheets.</p>
 
           <div className="flex flex-col gap-2 pt-2">
             {aiQA.map((x, i) => (
@@ -88,7 +88,7 @@ export default function BetoAI() {
                 <Image src="/beto/beto-thinking.png" alt="" width={36} height={80} className="mt-6 scale-[1.6]" />
               </span>
               <span className="flex flex-col">
-                <span className="text-[14px] font-semibold text-white">Beto AI</span>
+                <span className="text-[14px] font-semibold text-white">Beto POS AI</span>
                 <span className="flex items-center gap-1.5 text-[12px] text-muted"><span className="size-1.5 rounded-full bg-ok" /> Reading 27 stores live</span>
               </span>
             </div>

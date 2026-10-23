@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { KeyRound, Link2, ReceiptText, ShoppingBag, Tags, Wallet } from "lucide-react";
 import clsx from "clsx";
 import { rules } from "@/lib/content";
-import { Eyebrow, Reveal, SectionTitle } from "@/components/ui";
+import { Eyebrow, Reveal, SectionTitle, Tilt } from "@/components/ui";
 
 const icons = [Tags, Link2, KeyRound, ReceiptText, ShoppingBag, Wallet];
 
@@ -30,7 +30,7 @@ function Preview({ i }: { i: number }) {
       return (
         <div className={card}>
           {head("Pair a new counter", "Rangpur Franchise")}
-          <span className="text-[15px] leading-[22px] text-body">Open Beto on the SUNMI device and enter this code. Prices, staff and stock arrive in seconds.</span>
+          <span className="text-[15px] leading-[22px] text-body">Open Beto POS on the SUNMI device and enter this code. Prices, staff and stock arrive in seconds.</span>
           <div className="flex gap-2.5">
             {"47K29".split("").map((ch, j) => (
               <motion.span key={j} initial={{ y: 12, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: j * 0.08 }} className={clsx("grid h-[72px] flex-1 place-items-center rounded-2xl font-display text-[36px] font-medium", j === 4 ? "border-2 border-orange bg-white" : "bg-[#f3f2ef]")}>
@@ -80,7 +80,7 @@ export default function KeptInOrder() {
       <Reveal delay={0.15} className="tex-weave-light relative flex min-h-[460px] flex-1 items-center justify-center overflow-hidden rounded-[28px] p-5 sm:min-h-[560px] sm:p-10">
         <AnimatePresence mode="wait">
           <motion.div key={active} initial={{ opacity: 0, y: 24, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -16 }} transition={{ duration: 0.35 }} className="flex w-full justify-center">
-            <Preview i={active} />
+            <Tilt className="flex w-full justify-center"><Preview i={active} /></Tilt>
           </motion.div>
         </AnimatePresence>
       </Reveal>

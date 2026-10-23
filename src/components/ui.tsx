@@ -1,7 +1,64 @@
 "use client";
 
-import { motion, type HTMLMotionProps } from "framer-motion";
+import { useRef } from "react";
+import { motion, useMotionValue, useSpring, useTransform, type HTMLMotionProps } from "framer-motion";
 import clsx from "clsx";
+
+const spring = { stiffness: 220, damping: 18, mass: 0.4 };
+
+// Pulls its child toward the cursor a little, then springs back.
+export function Magnetic({ children, strength = 0.3, className }: { children: React.ReactNode; strength?: number; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const x = useSpring(0, spring);
+  const y = useSpring(0, spring);
+  return (
+    <motion.div
+      ref={ref}
+      className={clsx("inline-flex", className)}
+      style={{ x, y }}
+      onPointerMove={(e) => {
+        if (e.pointerType !== "mouse") return;
+        const r = ref.current!.getBoundingClientRect();
+        x.set((e.clientX - r.left - r.width / 2) * strength);
+        y.set((e.clientY - r.top - r.height / 2) * strength);
+      }}
+      onPointerLeave={() => {
+        x.set(0);
+        y.set(0);
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+// Soft 3D tilt that follows the cursor.
+export function Tilt({ children, className, max = 7 }: { children: React.ReactNode; className?: string; max?: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const px = useMotionValue(0.5);
+  const py = useMotionValue(0.5);
+  const rx = useSpring(useTransform(py, [0, 1], [max, -max]), spring);
+  const ry = useSpring(useTransform(px, [0, 1], [-max, max]), spring);
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      style={{ rotateX: rx, rotateY: ry, transformPerspective: 900 }}
+      onPointerMove={(e) => {
+        if (e.pointerType !== "mouse") return;
+        const r = ref.current!.getBoundingClientRect();
+        px.set((e.clientX - r.left) / r.width);
+        py.set((e.clientY - r.top) / r.height);
+      }}
+      onPointerLeave={() => {
+        px.set(0.5);
+        py.set(0.5);
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export function Logo({ className, dark = true }: { className?: string; dark?: boolean }) {
   return (
@@ -10,6 +67,7 @@ export function Logo({ className, dark = true }: { className?: string; dark?: bo
         <span className="h-[12px] w-[20px] rounded-[4px] bg-orange shadow-[0_0_12px_rgba(255,122,26,0.7)]" />
       </span>
       <span className={clsx("font-display text-[21px] font-bold tracking-[-0.05em]", dark ? "text-white" : "text-ink")}>beto</span>
+      <span className="-ml-1 rounded-[5px] bg-orange px-1.5 py-0.5 font-display text-[11px] font-bold tracking-[0.04em] text-ink">POS</span>
     </span>
   );
 }
@@ -58,10 +116,10 @@ export function Button({
   icon?: React.ReactNode;
 }) {
   return (
+    <Magnetic>
     <motion.a
       href={href}
-      whileHover={{ y: -2 }}
-      whileTap={{ scale: 0.97 }}
+      whileTap={{ scale: 0.96 }}
       className={clsx(
         "inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-6 py-3.5 text-[13px] font-medium tracking-[0.08em] uppercase transition-colors",
         variant === "primary" && "bg-orange text-ink hover:bg-[#ff8d3a]",
@@ -72,5 +130,6 @@ export function Button({
       {icon}
       {children}
     </motion.a>
+    </Magnetic>
   );
 }

@@ -69,7 +69,7 @@ export default function Console() {
           ))}
           <div className="mt-auto flex items-center gap-2.5 border-t border-white/10 pt-3 text-[13px] text-[#c9c9ce]">
             <Sparkles size={16} className="shrink-0 text-glow" />
-            Beto AI grouped 41 events into 3 that need you.
+            Beto POS AI grouped 41 events into 3 that need you.
           </div>
         </div>
       </div>

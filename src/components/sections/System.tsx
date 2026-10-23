@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { animate, motion, useInView, useMotionValue, useTransform } from "framer-motion";
 import { Building2, Globe, ShieldCheck, Smartphone, Store, Tablet, Users } from "lucide-react";
-import { Eyebrow, Reveal, SectionTitle } from "@/components/ui";
+import { Eyebrow, Reveal, SectionTitle, Tilt } from "@/components/ui";
 
 const devices = [
   { icon: Smartphone, name: "SUNMI handheld", sub: "Print · scan · bill", dot: "bg-ok" },
@@ -87,12 +87,13 @@ export default function System() {
 
         <Link top="bills · stock · cash" bottom="offline queue syncs" />
 
+        <Tilt className="lg:w-[340px] lg:shrink-0" max={6}>
         <motion.div
           initial={{ opacity: 0, scale: 0.94 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="flex flex-col gap-3.5 rounded-[22px] bg-tobacco p-6 shadow-[0_30px_60px_rgba(23,18,14,0.25)] lg:w-[340px] lg:shrink-0"
+          className="flex flex-col gap-3.5 rounded-[22px] bg-tobacco p-6 shadow-[0_30px_60px_rgba(23,18,14,0.25)]"
         >
           <div className="flex items-center justify-between">
             <span className="eyebrow text-glow">Central retail service</span>
@@ -115,6 +116,7 @@ export default function System() {
             ))}
           </div>
         </motion.div>
+        </Tilt>
 
         <Link top="prices · rules" bottom="reports · alerts" delay={0.9} />
 
@@ -153,7 +155,7 @@ export default function System() {
           </div>
         ))}
       </div>
-      <p className="mt-5 text-[12px] text-muted">Figures from the Akboria demo environment.</p>
+      <p className="mt-5 text-[12px] text-muted">Figures from the Beto POS demo environment.</p>
     </section>
   );
 }

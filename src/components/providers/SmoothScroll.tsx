@@ -13,6 +13,8 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
 
     const lenis = new Lenis({ duration: 1.1, smoothWheel: true });
     lenis.on("scroll", ScrollTrigger.update);
+    // Sections that jump to a position go through Lenis so it doesn't pull the page back.
+    (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
 
     const tick = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(tick);

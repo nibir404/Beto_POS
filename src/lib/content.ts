@@ -1,5 +1,5 @@
 // All copy and demo data for the landing page, taken from the Paper design.
-// Figures are demo data from the Akboria walkthrough — replace before launch.
+// Figures are demo data from the Beto POS walkthrough — replace before launch.
 
 export type Store = {
   name: string;
@@ -39,9 +39,9 @@ export type Scene = {
 };
 
 export const scenes: Scene[] = [
-  { id: "01", time: "07:30", title: "The challan arrives", beat: "Two patties short. Beto notes it before anyone signs.", slate: "BOGURA SHOWROOM · 07:30 · DELIVERY", bn: "চালান এল। দুটো প্যাটি কম।", en: "The delivery came in two patties short.", pose: "standing" },
+  { id: "01", time: "07:30", title: "The challan arrives", beat: "Two patties short. Beto POS flags it before anyone signs.", slate: "BOGURA SHOWROOM · 07:30 · DELIVERY", bn: "চালান এল। দুটো প্যাটি কম।", en: "The delivery came in two patties short.", pose: "standing" },
   { id: "02", time: "11:42", title: "A bill is born", beat: "৳590, split bKash and cash. Receipt on WhatsApp.", slate: "BOGURA SHOWROOM · 11:42 · COUNTER 2", bn: "৳৫৯০ — বিকাশে ৪০০, নগদে ১৯০।", en: "৳590 — ৳400 by bKash, ৳190 in cash.", pose: "pointing" },
-  { id: "03", time: "14:10", title: "The lights go out", beat: "Rangpur keeps selling. 12 bills wait in Beto's queue.", slate: "RANGPUR FRANCHISE · 14:10 · POWER CUT", bn: "বিদ্যুৎ চলে গেল। বিক্রি থামেনি।", en: "The power went out. The selling didn't.", pose: "pointing" },
+  { id: "03", time: "14:10", title: "The lights go out", beat: "Rangpur keeps selling. 12 bills wait in Beto POS's offline queue.", slate: "RANGPUR FRANCHISE · 14:10 · POWER CUT", bn: "বিদ্যুৎ চলে গেল। বিক্রি থামেনি।", en: "The power went out. The selling didn't.", pose: "pointing" },
   { id: "04", time: "14:52", title: "Back online", beat: "Every bill reaches head office. None lost.", slate: "RANGPUR FRANCHISE · 14:52 · SYNC", bn: "সংযোগ ফিরল। ১২টা বিল পৌঁছে গেল।", en: "Back online. All 12 bills arrived.", pose: "thinking" },
   { id: "05", time: "22:00", title: "The day closes", beat: "All counters closed. Beto finally sleeps.", slate: "HEAD OFFICE · 22:00 · DAY CLOSE", bn: "সব কাউন্টার বন্ধ। হিসাব মিলেছে।", en: "Every counter closed. The numbers match.", pose: "sleeping" },
 ];
@@ -71,11 +71,11 @@ export const channels: Channel[] = [
   { n: 14, group: "When things go wrong", name: "Offline selling & sync", screen: { title: "Offline", meta: "Rangpur · Counter 1", big: "12", rows: [["Bills queued", "since 14:10"], ["Status", "selling normally"]] } },
   { n: 15, group: "When things go wrong", name: "Returns at the price paid", screen: { title: "Return", meta: "Bill #0377", rows: [["Rasmalai 500g", "৳245 paid"], ["Refund", "৳245"], ["Already refunded", "no"]], cta: "CONFIRM REFUND" } },
   { n: 16, group: "Closing", name: "X-report & cash count", screen: { title: "Cash count", meta: "Bogura · 21:40", big: "−৳20", rows: [["Expected", "৳48,320"], ["Counted", "৳48,300"]] } },
-  { n: 17, group: "Closing", name: "Stock count & tomorrow's demand", screen: { title: "Tomorrow's demand", meta: "To Akboria depot", rows: [["Black Forest 1kg", "+8"], ["Chicken Patty", "+40"], ["Sandwich Bread", "+25"]], cta: "SEND DEMAND" } },
+  { n: 17, group: "Closing", name: "Stock count & tomorrow's demand", screen: { title: "Tomorrow's demand", meta: "To the central depot", rows: [["Black Forest 1kg", "+8"], ["Chicken Patty", "+40"], ["Sandwich Bread", "+25"]], cta: "SEND DEMAND" } },
   { n: 18, group: "Closing", name: "Day close waits for every counter", screen: { title: "Day close", meta: "Bogura Showroom", big: "3 / 3", rows: [["Counter 1", "closed"], ["Counter 2", "closed"], ["Counter 3", "closed"]] } },
   { n: 19, group: "Oversight", name: "Every store on one page", screen: { title: "All stores today", meta: "61 / 62 counters live", big: "৳41.6L", rows: [["Top", "Dhanmondi"], ["Alerts", "3 open"]] } },
   { n: 20, group: "Oversight", name: "Franchise settlement", screen: { title: "Rangpur settlement", meta: "This week", rows: [["Sales", "৳4,12,600"], ["Commission", "−৳41,260"], ["Cash sent", "৳3,50,000"]] } },
-  { n: 21, group: "Oversight", name: "Ask Beto AI", ai: true, screen: { title: "Beto AI", meta: "Ask in Bangla or English", rows: [["You", "Kon store pichiye?"], ["Beto", "Rangpur, −18%. Power cut."]] } },
+  { n: 21, group: "Oversight", name: "Ask Beto POS AI", ai: true, screen: { title: "Beto POS AI", meta: "Ask in Bangla or English", rows: [["You", "Kon store pichiye?"], ["Beto", "Rangpur, −18%. Power cut."]] } },
 ];
 
 export const channelGroups = ["Head office", "Delivery", "Counter", "When things go wrong", "Closing", "Oversight"];
@@ -119,7 +119,7 @@ export const aiQA = [
   },
   {
     q: "Draft tomorrow's demand",
-    a: "Drafted for 27 stores: +8 Black Forest for Rangpur (6 cake orders tonight), +40 patties for Bogura. Send to Akboria?",
+    a: "Drafted for 27 stores: +8 Black Forest for Rangpur (6 cake orders tonight), +40 patties for Bogura. Send to the depot?",
   },
 ];
 
@@ -132,9 +132,9 @@ export const rollout = [
 
 export const faqs = [
   { q: "What happens when the internet goes down?", a: "Counters keep billing. Bills wait in a queue on the device and sync on their own when the connection is back. Head office sees how long each counter was offline." },
-  { q: "Do we need new hardware?", a: "Beto runs on SUNMI handhelds, Android tablets and phones, and in any web browser. Most chains start on the devices they already have." },
+  { q: "Do we need new hardware?", a: "Beto POS runs on SUNMI handhelds, Android tablets and phones, and in any web browser. Most chains start on the devices they already have." },
   { q: "Can we move our products and prices from the old POS?", a: "Yes. We import your product list and prices during week one, then publish one price list to every store." },
   { q: "How do franchise owners see their numbers?", a: "Each owner gets their own view of sales, settlement with head office, commission and cash sent — and nothing from other stores." },
   { q: "Who can give discounts or void a bill?", a: "Head office sets the limits per role. Anything above a cashier's limit needs a supervisor PIN, and every void asks for confirmation and is logged." },
-  { q: "Is there support in Bangla?", a: "Yes. Training, the counter app and Beto AI all work in Bangla, and our team supports you during setup and after go-live." },
+  { q: "Is there support in Bangla?", a: "Yes. Training, the counter app and Beto POS AI all work in Bangla, and our team supports you during setup and after go-live." },
 ];

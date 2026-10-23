@@ -9,7 +9,7 @@ const links = [
   { label: "System", href: "#system" },
   { label: "Story", href: "#story" },
   { label: "Features", href: "#features" },
-  { label: "Beto AI", href: "#ai" },
+  { label: "Beto POS AI", href: "#ai" },
   { label: "FAQ", href: "#faq" },
 ];
 
@@ -24,7 +24,7 @@ export default function Nav() {
         {links.map((l) => (
           <a key={l.href} href={l.href} className="group relative text-[12px] font-medium tracking-[0.1em] text-white/90 uppercase">
             {l.label}
-            {l.label === "Beto AI" && <span className="absolute -top-2 -right-3 size-1.5 rounded-full bg-orange animate-blink-dot" />}
+            {l.label === "Beto POS AI" && <span className="absolute -top-2 -right-3 size-1.5 rounded-full bg-orange animate-blink-dot" />}
             <span className="absolute -bottom-1 left-0 h-px w-0 bg-orange transition-all duration-300 group-hover:w-full" />
           </a>
         ))}

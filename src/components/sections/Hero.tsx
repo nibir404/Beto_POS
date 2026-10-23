@@ -19,7 +19,7 @@ const Beto3D = dynamic(() => import("@/components/three/Beto3D"), {
 const lines = [
   { text: "Every counter. Every store.", cream: false },
   { text: "One set of numbers.", cream: false },
-  { text: "Beto keeps count.", cream: true },
+  { text: "Beto POS keeps count.", cream: true },
 ];
 
 export default function Hero() {

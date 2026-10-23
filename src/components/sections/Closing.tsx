@@ -95,7 +95,7 @@ export function CTA() {
           <AnimatePresence mode="wait">
             {sent ? (
               <motion.span key="ok" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-1 items-center gap-2 py-3 text-left text-[15px] text-cream">
-                <Check size={18} className="text-ok" /> Booked. Beto will call you within a day.
+                <Check size={18} className="text-ok" /> Booked. The Beto POS team will call you within a day.
               </motion.span>
             ) : (
               <motion.input key="in" value={value} onChange={(e) => setValue(e.target.value)} placeholder="Work email or phone" aria-label="Work email or phone" className="min-w-0 flex-1 bg-transparent py-3 text-[15px] text-white placeholder:text-[#a59a8c] focus:outline-none" />

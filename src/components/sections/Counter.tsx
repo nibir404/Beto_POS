@@ -137,7 +137,7 @@ export default function Counter() {
                 className="flex items-start gap-2 rounded-xl bg-[#fff6da] px-3.5 py-3 text-left text-[13px] leading-[19px]"
               >
                 <Sparkles size={15} className="mt-0.5 shrink-0 text-orange-dark" />
-                <span><b className="font-semibold">Beto AI:</b> customers who buy Rasmalai usually add Mishti Doi. Add it?</span>
+                <span><b className="font-semibold">Beto POS AI:</b> customers who buy Rasmalai usually add Mishti Doi. Add it?</span>
               </motion.button>
             )}
           </AnimatePresence>
@@ -178,7 +178,7 @@ export default function Counter() {
                 onClick={() => setReceipt(null)}
                 className="absolute top-full right-4 left-4 z-10 -mt-2 cursor-pointer bg-white px-5 pt-4 pb-5 text-center text-[12px] shadow-[0_20px_40px_rgba(23,18,14,0.2)] lg:right-6 lg:left-6"
               >
-                <div className="font-semibold tracking-[0.1em]">AKBORIA · BOGURA</div>
+                <div className="font-semibold tracking-[0.1em]">BETO POS · BOGURA SHOWROOM</div>
                 <div className="text-muted">COUNTER 2 · INV #0{receipt.no}</div>
                 <div className="my-2 border-t border-dashed border-[#bdbdc2]" />
                 <div className="flex justify-between text-[14px] font-semibold"><span>TOTAL</span><span>{fmt(receipt.total)}</span></div>

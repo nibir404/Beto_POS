@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, Lightformer, RoundedBox } from "@react-three/drei";
 import * as THREE from "three";
@@ -45,7 +45,7 @@ function Hand() {
   );
 }
 
-function Beto({ happy }: { happy: boolean }) {
+function Beto({ happy, poke }: { happy: boolean; poke: React.MutableRefObject<number> }) {
   const head = useRef<THREE.Group>(null);
   const bar = useRef<THREE.Mesh>(null);
   const smile = useRef<THREE.Mesh>(null);
@@ -66,7 +66,13 @@ function Beto({ happy }: { happy: boolean }) {
       head.current.rotation.x = THREE.MathUtils.lerp(head.current.rotation.x, -pointer.y * 0.25 + Math.sin(t * 0.8) * 0.02, 0.08);
       head.current.rotation.z = THREE.MathUtils.lerp(head.current.rotation.z, -pointer.x * 0.08, 0.06);
     }
-    if (body.current) body.current.position.y = Math.sin(t * 1.6) * 0.012;
+    if (body.current) {
+      // A click makes Beto hop and spin once.
+      const since = t - poke.current;
+      const hop = since >= 0 && since < 0.9 ? Math.sin((since / 0.9) * Math.PI) : 0;
+      body.current.position.y = Math.sin(t * 1.6) * 0.012 + hop * 0.45;
+      body.current.rotation.y = since >= 0 && since < 0.9 ? (since / 0.9) * Math.PI * 2 : 0;
+    }
 
     // Legs swing like someone sitting on a ledge.
     if (legL.current) legL.current.rotation.x = Math.sin(t * 1.8) * 0.28;
@@ -186,6 +192,11 @@ function Beto({ happy }: { happy: boolean }) {
   );
 }
 
+function Clock({ clock }: { clock: React.MutableRefObject<number> }) {
+  useFrame((s) => (clock.current = s.clock.elapsedTime));
+  return null;
+}
+
 function CameraRig() {
   const camera = useThree((s) => s.camera);
   useFrame(() => camera.lookAt(0, 1.05, 0));
@@ -194,17 +205,34 @@ function CameraRig() {
 
 export default function Beto3D({ className }: { className?: string }) {
   const [happy, setHappy] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const wrap = useRef<HTMLDivElement>(null);
+  const poke = useRef(-10);
+  const clock = useRef(0);
+
+  // Stop rendering when Beto is scrolled out of view.
+  useEffect(() => {
+    const el = wrap.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setVisible(e.isIntersecting), { rootMargin: "100px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <div
+      ref={wrap}
       className={className}
       onPointerEnter={() => setHappy(true)}
       onPointerLeave={() => setHappy(false)}
+      onClick={() => (poke.current = clock.current)}
       aria-label="Beto, the Beto POS mascot, sitting on the console"
       role="img"
     >
-      <Canvas dpr={[1, 2]} camera={{ position: [0, 2.6, 9], fov: 30 }} gl={{ antialias: true, alpha: true }}>
+      <Canvas frameloop={visible ? "always" : "never"} dpr={[1, 1.75]} camera={{ position: [0, 2.6, 9], fov: 30 }} gl={{ antialias: true, alpha: true }}>
         <ambientLight intensity={0.7} />
         <CameraRig />
+        <Clock clock={clock} />
         <directionalLight position={[0, 2, 6]} intensity={1.1} color="#ffffff" />
         <directionalLight position={[3, 5, 4]} intensity={2.4} color="#fff3e6" />
         <directionalLight position={[-4, 2, -3]} intensity={1.2} color="#ff9a52" />
@@ -214,7 +242,7 @@ export default function Beto3D({ className }: { className?: string }) {
           <Lightformer intensity={0.5} position={[4, 1, -2]} scale={[2, 4, 1]} color="#ffffff" />
         </Environment>
         <group position={[0, 0, 0]} scale={0.95}>
-          <Beto happy={happy} />
+          <Beto happy={happy} poke={poke} />
         </group>
       </Canvas>
     </div>

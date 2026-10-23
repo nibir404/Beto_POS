@@ -15,24 +15,51 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const stopIcons = [FileText, Smartphone, CloudOff, RefreshCw, BarChart3];
 const stops = [10, 30, 50, 70, 90]; // % across the stage
+const HOLD = 0.55; // share of each scene Beto stands still before walking on
 
 export default function Story() {
   const section = useRef<HTMLElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
+  const walker = useRef<HTMLDivElement>(null);
+  const bob = useRef<HTMLDivElement>(null);
+  const railFill = useRef<HTMLDivElement>(null);
   const trigger = useRef<ScrollTrigger | null>(null);
-  const [progress, setProgress] = useState(0);
-  const scene = Math.min(scenes.length - 1, Math.floor(progress * scenes.length));
+  const sceneRef = useRef(0);
+  const [scene, setScene] = useState(0);
   const current = scenes[scene];
 
   useGSAP(
     () => {
+      const n = scenes.length;
+      // One timeline unit per scene; scroll scrubs it, React only hears about scene changes.
+      const tl = gsap.timeline({ defaults: { ease: "none" } });
+      gsap.set(walker.current, { xPercent: stops[0] });
+      gsap.set(railFill.current, { scaleX: 0 });
+      for (let i = 0; i < n; i++) {
+        const at = i;
+        if (i < n - 1) {
+          tl.to(walker.current, { xPercent: stops[i + 1], duration: 1 - HOLD, ease: "power1.inOut" }, at + HOLD);
+          tl.to(railFill.current, { scaleX: (stops[i + 1] - stops[0]) / 80, duration: 1 - HOLD, ease: "power1.inOut" }, at + HOLD);
+          tl.to(bob.current, { y: -8, duration: (1 - HOLD) / 4, repeat: 3, yoyo: true, ease: "sine.inOut" }, at + HOLD);
+        } else {
+          tl.to({}, { duration: 1 }, at);
+        }
+      }
+
       trigger.current = ScrollTrigger.create({
         trigger: pinRef.current,
         start: "top top+=16",
-        end: "+=320%",
+        end: "+=360%",
         pin: true,
-        scrub: true,
-        onUpdate: (self) => setProgress(self.progress),
+        scrub: 0.9,
+        animation: tl,
+        onUpdate: (self) => {
+          const s = Math.min(n - 1, Math.floor(self.progress * n));
+          if (s !== sceneRef.current) {
+            sceneRef.current = s;
+            setScene(s);
+          }
+        },
       });
     },
     { scope: section },
@@ -41,14 +68,12 @@ export default function Story() {
   const jumpTo = (i: number) => {
     const st = trigger.current;
     if (!st) return;
-    window.scrollTo({ top: st.start + ((i + 0.5) / scenes.length) * (st.end - st.start), behavior: "smooth" });
+    const top = st.start + ((i + HOLD / 2) / scenes.length) * (st.end - st.start);
+    const lenis = (window as unknown as { __lenis?: { scrollTo: (y: number, o?: object) => void } }).__lenis;
+    if (lenis) lenis.scrollTo(top, { duration: 1.2 });
+    else window.scrollTo({ top, behavior: "smooth" });
   };
 
-  // Beto walks the rail, then holds at each stop for a beat.
-  const local = progress * scenes.length - scene;
-  const eased = Math.min(1, Math.max(0, (local - 0.55) / 0.45));
-  const next = Math.min(scene + 1, scenes.length - 1);
-  const betoX = stops[scene] + (stops[next] - stops[scene]) * eased;
   const dark = scene === 2;
 
   return (
@@ -56,11 +81,16 @@ export default function Story() {
       <div ref={pinRef} className="tex-weave-dark flex min-h-[calc(100svh-32px)] flex-col justify-center gap-6 rounded-[20px] px-4 py-10 sm:rounded-[28px] sm:px-8 lg:gap-8 lg:px-16 lg:py-14">
         <div className="flex items-end justify-between gap-6">
           <div className="flex flex-col gap-2">
-            <Eyebrow dot>A Beto film · Scene {scene + 1} of 5</Eyebrow>
+            <Eyebrow dot>A Beto POS film · Scene {scene + 1} of 5</Eyebrow>
             <h2 className="poster text-[38px] leading-[1.25] sm:text-[56px] lg:text-[72px]">The story of one bill.</h2>
           </div>
-          <span className="hidden font-display text-[48px] font-light tracking-[-0.04em] text-[#4a4038] sm:block lg:text-[64px]">
-            {String(scene + 1).padStart(2, "0")} / 05
+          <span className="hidden font-display text-[48px] font-light tracking-[-0.04em] text-[#4a4038] tabular-nums sm:block lg:text-[64px]">
+            <AnimatePresence mode="popLayout" initial={false}>
+              <motion.span key={scene} className="inline-block" initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -30, opacity: 0 }} transition={{ duration: 0.35 }}>
+                {String(scene + 1).padStart(2, "0")}
+              </motion.span>
+            </AnimatePresence>{" "}
+            / 05
           </span>
         </div>
 
@@ -90,7 +120,7 @@ export default function Story() {
 
           {/* Rail */}
           <div className="absolute top-[64%] left-[10%] h-0.5 w-[80%] bg-white/10" />
-          <div className="absolute top-[64%] left-[10%] h-1 -translate-y-px rounded-full bg-orange shadow-[0_0_14px_#ff7a1a]" style={{ width: `${betoX - 10}%` }} />
+          <div ref={railFill} className="absolute top-[64%] left-[10%] h-1 w-[80%] origin-left -translate-y-px rounded-full bg-orange shadow-[0_0_14px_#ff7a1a] will-change-transform" />
 
           {stops.map((x, i) => {
             const Icon = stopIcons[i];
@@ -98,33 +128,36 @@ export default function Story() {
             return (
               <div key={i} className="absolute top-[58%] -translate-x-1/2" style={{ left: `${x}%`, width: "11%" }}>
                 <motion.div
-                  animate={{ y: state === "now" ? -6 : 0, opacity: state === "future" ? 0.45 : 1 }}
+                  animate={{ y: state === "now" ? 10 : 0, opacity: state === "now" ? 0 : state === "future" ? 0.45 : 1, scale: state === "now" ? 0.8 : 1 }}
+                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                   className={clsx(
                     "absolute bottom-full left-1/2 mb-3 grid aspect-square w-[52%] -translate-x-1/2 place-items-center rounded-xl border",
-                    state === "now" ? "border-orange/60 bg-[#2a1a0e] text-glow" : "border-white/10 bg-tobacco-3 text-cream",
+                    state === "past" ? "border-orange/30 bg-[#2a1a0e] text-glow" : "border-white/10 bg-tobacco-3 text-cream",
                   )}
                 >
                   <Icon className="size-[42%]" />
                 </motion.div>
-                <div className={clsx("h-[clamp(14px,3.6vw,50px)] rounded-t-[12px]", state === "now" ? "bg-orange" : "bg-tobacco-3", state === "future" && "opacity-50")} />
-                <div className={clsx("h-[clamp(10px,2.2vw,30px)] rounded-b-[12px]", state === "now" ? "bg-[#b84e08]" : "bg-[#1c1612]", state === "future" && "opacity-50")} />
+                <div className={clsx("h-[clamp(14px,3.6vw,50px)] rounded-t-[12px] transition-colors duration-500", state === "now" ? "bg-orange" : "bg-tobacco-3", state === "future" && "opacity-50")} />
+                <div className={clsx("h-[clamp(10px,2.2vw,30px)] rounded-b-[12px] transition-colors duration-500", state === "now" ? "bg-[#b84e08]" : "bg-[#1c1612]", state === "future" && "opacity-50")} />
               </div>
             );
           })}
 
-          {/* Beto travelling the rail */}
-          <div className="absolute top-[18%] z-[11] h-[42%] -translate-x-1/2 transition-[left] duration-100 ease-linear" style={{ left: `${betoX}%` }}>
-            <AnimatePresence mode="wait">
-              <motion.div key={current.pose} initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.92 }} transition={{ duration: 0.25 }} className="relative h-full aspect-[3/4]">
-                <Image src={`/beto/beto-${current.pose}.png`} alt={`Beto ${current.pose}`} fill sizes="200px" className="object-contain object-bottom" />
-              </motion.div>
-            </AnimatePresence>
+          {/* Beto travelling the rail: a full-width track whose xPercent equals % of the stage */}
+          <div ref={walker} className="pointer-events-none absolute inset-x-0 top-[18%] z-[11] h-[42%] will-change-transform">
+            <div ref={bob} className="absolute top-0 left-0 h-full -translate-x-1/2">
+              <AnimatePresence mode="wait">
+                <motion.div key={current.pose} initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.94 }} transition={{ duration: 0.22 }} className="relative aspect-[3/4] h-full">
+                  <Image src={`/beto/beto-${current.pose}.png`} alt={`Beto ${current.pose}`} fill sizes="220px" className="object-contain object-bottom" />
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
 
           {/* Subtitles */}
           <div className="absolute inset-x-0 bottom-[10%] z-20 flex flex-col items-center gap-1 px-4 text-center">
             <AnimatePresence mode="wait">
-              <motion.div key={current.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.35 }} className="flex flex-col items-center gap-1">
+              <motion.div key={current.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.35 }} className="flex flex-col items-center gap-1">
                 <span className="bg-[rgba(6,5,4,0.75)] px-3 py-0.5 font-bangla text-[13px] font-medium text-mustard sm:text-[20px]">{current.bn}</span>
                 <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="bg-[rgba(6,5,4,0.75)] px-3 py-0.5 text-[12px] font-medium text-cream sm:text-[16px]">
                   {current.en}
@@ -143,22 +176,25 @@ export default function Story() {
           </div>
           <div className="flex gap-2 overflow-x-auto px-2.5 py-2.5 [scrollbar-width:none]">
             {scenes.map((s, i) => (
-              <button
+              <motion.button
                 key={s.id}
                 onClick={() => jumpTo(i)}
+                whileHover={{ y: -3 }}
+                whileTap={{ scale: 0.97 }}
                 className={clsx(
-                  "flex min-w-[190px] flex-1 flex-col gap-1.5 rounded px-4 py-3.5 text-left transition-colors",
-                  i === scene ? "border border-orange bg-[#2a1a0e]" : "border border-transparent bg-tobacco hover:bg-tobacco-2",
+                  "relative flex min-w-[190px] flex-1 flex-col gap-1.5 overflow-hidden rounded px-4 py-3.5 text-left transition-colors duration-300",
+                  i === scene ? "bg-[#2a1a0e]" : "bg-tobacco hover:bg-tobacco-2",
                   i > scene && "opacity-60",
                 )}
               >
-                <span className={clsx("text-[11px] font-medium tracking-[0.12em]", i === scene ? "text-glow" : "text-muted")}>
+                {i === scene && <motion.span layoutId="scene-frame" className="absolute inset-0 rounded border border-orange" transition={{ type: "spring", stiffness: 380, damping: 34 }} />}
+                <span className={clsx("relative text-[11px] font-medium tracking-[0.12em]", i === scene ? "text-glow" : "text-muted")}>
                   SC. {s.id} · {s.time}
                   {i === scene && " · NOW"}
                 </span>
-                <span className="font-display text-[17px] font-medium text-cream">{s.title}</span>
-                <span className="hidden text-[13px] leading-[19px] text-muted md:block">{s.beat}</span>
-              </button>
+                <span className="relative font-display text-[17px] font-medium text-cream">{s.title}</span>
+                <span className="relative hidden text-[13px] leading-[19px] text-muted md:block">{s.beat}</span>
+              </motion.button>
             ))}
           </div>
           <div className="flex justify-between px-3">
