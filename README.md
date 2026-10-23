@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Beto POS — landing page
 
-## Getting Started
-
-First, run the development server:
+Next.js 15 + Tailwind v4 build of the Paper design (`03 · Landing Page`).
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # http://localhost:3000
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Three.js / React Three Fiber / drei** — the hero Beto is a real-time 3D model built in code (`src/components/three/Beto3D.tsx`). His head follows the cursor, the screen blinks, legs swing, and hovering turns his light bar into a smile.
+- **GSAP ScrollTrigger** — pins *The story of one bill* and plays it as you scroll.
+- **Lenis** — smooth scrolling, synced to GSAP (`src/components/providers/SmoothScroll.tsx`).
+- **Framer Motion** — reveals, Beto TV channel switching, chat typing, counter interactions, FAQ.
+- **lucide-react** — icons.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Where things live
 
-## Learn More
+| Section | File |
+|---|---|
+| Hero + Retail Console | `sections/Hero.tsx`, `sections/Console.tsx` |
+| 01 System diagram + figures | `sections/System.tsx` |
+| Story of one bill (pinned film) | `sections/Story.tsx` |
+| Beto TV (21 feature channels) | `sections/BetoTV.tsx` |
+| One day | `sections/OneDay.tsx` |
+| Playable counter | `sections/Counter.tsx` |
+| Kept in order | `sections/KeptInOrder.tsx` |
+| Beto AI | `sections/BetoAI.tsx` |
+| Rollout, FAQ, CTA + footer | `sections/Closing.tsx` |
 
-To learn more about Next.js, take a look at the following resources:
+All copy and demo figures are in `src/lib/content.ts`. **The figures are demo data — replace them before launch.**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Fonts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Headings use **Helvetica Now Display** when it is installed, falling back to Inter Tight. To ship Helvetica Now Display to every visitor, add its licensed web font files with `next/font/local`.
