@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { CalendarCheck, Play } from "lucide-react";
 import Nav from "./Nav";
 import Console from "./Console";
@@ -23,8 +23,6 @@ const lines = [
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const betoY = useTransform(scrollYProgress, [0, 1], [0, -60]);
 
   return (
     <section id="top" ref={ref} className="bg-hero relative overflow-hidden rounded-[20px] border border-line px-4 pt-6 sm:rounded-[28px] sm:px-8 sm:pt-7 lg:px-16">
@@ -60,12 +58,11 @@ export default function Hero() {
 
       {/* The product stage: Beto sits on the Retail Console. */}
       <div className="relative mt-[200px] sm:mt-[240px] xl:mt-24">
-        <motion.div
-          style={{ y: betoY }}
-          className="absolute right-[2%] bottom-full z-20 h-[276px] w-[240px] translate-y-[81px] sm:h-[300px] sm:w-[260px] sm:translate-y-[88px] xl:right-[3%] xl:h-[600px] xl:w-[520px] xl:translate-y-[176px]"
+        <div
+          className="absolute right-[2%] bottom-full z-20 h-[276px] w-[240px] translate-y-[71px] sm:h-[300px] sm:w-[260px] sm:translate-y-[77px] xl:right-[3%] xl:h-[600px] xl:w-[520px] xl:translate-y-[154px]"
         >
           <Beto3D className="h-full w-full cursor-grab" />
-        </motion.div>
+        </div>
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}

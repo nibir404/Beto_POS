@@ -20,7 +20,7 @@ export default function Nav() {
       <a href="#top" aria-label="Beto POS home">
         <Logo />
       </a>
-      <nav className="hidden items-center gap-9 md:flex">
+      <nav className="hidden items-center gap-9 lg:flex">
         {links.map((l) => (
           <a key={l.href} href={l.href} className="group relative text-[15px] font-medium text-ink">
             {l.label}
@@ -29,11 +29,11 @@ export default function Nav() {
           </a>
         ))}
       </nav>
-      <div className="hidden md:block">
+      <div className="hidden lg:block">
         <Button>Book a demo</Button>
       </div>
       <button
-        className="grid size-11 place-items-center rounded-xl border border-line bg-white text-ink md:hidden"
+        className="grid size-11 place-items-center rounded-xl border border-line bg-white text-ink lg:hidden"
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Close menu" : "Open menu"}
         aria-expanded={open}
@@ -46,7 +46,7 @@ export default function Nav() {
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
-            className="absolute top-14 right-0 left-0 flex flex-col gap-1 rounded-2xl border border-line bg-white p-3 shadow-[0_20px_40px_rgba(58,60,65,0.12)] md:hidden"
+            className="absolute top-14 right-0 left-0 flex flex-col gap-1 rounded-2xl border border-line bg-white p-3 shadow-[0_20px_40px_rgba(58,60,65,0.12)] lg:hidden"
           >
             {links.map((l) => (
               <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="rounded-xl px-4 py-3 text-[15px] text-ink hover:bg-soft">

@@ -199,7 +199,7 @@ function Clock({ clock }: { clock: React.MutableRefObject<number> }) {
 
 function CameraRig() {
   const camera = useThree((s) => s.camera);
-  useFrame(() => camera.lookAt(0, 1.05, 0));
+  useFrame(() => camera.lookAt(0, 1.0, 0));
   return null;
 }
 
@@ -229,7 +229,7 @@ export default function Beto3D({ className }: { className?: string }) {
       aria-label="Beto, the Beto POS mascot, sitting on the console"
       role="img"
     >
-      <Canvas frameloop={visible ? "always" : "never"} dpr={[1, 1.75]} camera={{ position: [0, 2.6, 9], fov: 30 }} gl={{ antialias: true, alpha: true }}>
+      <Canvas frameloop={visible ? "always" : "never"} dpr={[1, 1.75]} camera={{ position: [0, 3.6, 8.6], fov: 30 }} gl={{ antialias: true, alpha: true }}>
         <ambientLight intensity={0.7} />
         <CameraRig />
         <Clock clock={clock} />
@@ -241,7 +241,8 @@ export default function Beto3D({ className }: { className?: string }) {
           <Lightformer intensity={0.8} position={[-4, 1, 2]} scale={[2, 4, 1]} color="#ff9a52" />
           <Lightformer intensity={0.5} position={[4, 1, -2]} scale={[2, 4, 1]} color="#ffffff" />
         </Environment>
-        <group position={[0, 0, 0]} scale={0.95}>
+        {/* Turned toward the headline and seen from slightly above so his lap reads as sitting. Hero.tsx offsets assume this camera. */}
+        <group position={[0, 0, 0]} rotation={[0, -0.42, 0]} scale={0.95}>
           <Beto happy={happy} poke={poke} />
         </group>
       </Canvas>
