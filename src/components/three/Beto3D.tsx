@@ -7,7 +7,7 @@ import * as THREE from "three";
 
 const GRAPHITE = "#5a5d66";
 const GRAPHITE_DARK = "#43454c";
-const ORANGE = "#ff7a1a";
+const ORANGE = "#EE8139";
 const GREY_BAND = "#9a9ca3";
 
 function Band({ y, r = 0.13, color = ORANGE }: { y: number; r?: number; color?: string }) {
@@ -126,7 +126,7 @@ function Beto({ happy, poke }: { happy: boolean; poke: React.MutableRefObject<nu
           <meshStandardMaterial color="#1b1410" roughness={0.3} />
         </RoundedBox>
         <RoundedBox args={[1.3, 0.86, 0.06]} radius={0.18} position={[0, 0.72, 0.61]}>
-          <meshPhysicalMaterial color={ORANGE} emissive="#ff5a00" emissiveIntensity={1.15} roughness={0.08} clearcoat={1} clearcoatRoughness={0.05} />
+          <meshPhysicalMaterial color={ORANGE} emissive="#e0661c" emissiveIntensity={0.55} roughness={0.08} clearcoat={1} clearcoatRoughness={0.05} />
         </RoundedBox>
         <mesh ref={bar} geometry={barGeo} position={[0, 0.74, 0.66]} rotation={[0, 0, Math.PI / 2]}>
           <meshStandardMaterial color="#fff6e8" emissive="#fff1d6" emissiveIntensity={2.4} />

@@ -21,13 +21,13 @@ function Visual({ i }: { i: number }) {
     return (
       <div className="flex flex-col gap-2.5">
         <div className="flex items-center gap-2.5 rounded-full bg-ink px-3.5 py-3 text-[13px] text-white">
-          <KeyRound size={16} className="text-mustard" /> Discount 15% · PIN needed
+          <KeyRound size={16} className="text-glow" /> Discount 15% · PIN needed
         </div>
         <div className="flex items-center justify-between rounded-xl bg-white p-3.5">
           <span className="font-display text-[22px] font-medium">৳590</span>
           <span className="flex gap-1">
             <span className="rounded-full bg-bkash px-2.5 py-1.5 text-[10px] font-medium text-white">bKash</span>
-            <span className="rounded-full bg-[#f3f2ef] px-2.5 py-1.5 text-[10px] font-medium">Nagad</span>
+            <span className="rounded-full bg-[#F5F6F7] px-2.5 py-1.5 text-[10px] font-medium">Nagad</span>
           </span>
         </div>
       </div>
@@ -50,9 +50,9 @@ function Visual({ i }: { i: number }) {
     );
   return (
     <div className="flex h-full flex-col justify-center gap-2 text-cream">
-      <span className="eyebrow flex items-center gap-2 text-[11px] text-mustard"><Moon size={13} /> Day close · 3 / 3 counters</span>
+      <span className="eyebrow flex items-center gap-2 text-[11px] text-glow"><Moon size={13} /> Day close · 3 / 3 counters</span>
       <span className="font-display text-[34px] font-medium tracking-[-0.03em] text-white">−৳20</span>
-      <span className="text-[13px] leading-[19px] text-[#a8a8ae]">cash difference · stock counted · demand sent to the depot</span>
+      <span className="text-[13px] leading-[19px] text-[#A3A5AB]">cash difference · stock counted · demand sent to the depot</span>
     </div>
   );
 }
@@ -67,7 +67,7 @@ export default function OneDay() {
       <div className="mt-14 grid grid-cols-1 border-t border-ink sm:grid-cols-2 lg:grid-cols-4">
         {days.map((d, i) => (
           <Reveal key={d.title} delay={i * 0.1} className={`flex flex-col gap-3 pt-6 pb-8 sm:px-5 lg:px-6 ${i ? "lg:border-l lg:border-line" : "lg:pl-0"}`}>
-            <Tilt className={`h-[220px] rounded-[18px] p-[18px] ${i === 3 ? "bg-tobacco" : "tex-weave-light"} flex flex-col justify-center`}>
+            <Tilt className={`h-[220px] rounded-[18px] p-[18px] ${i === 3 ? "bg-charcoal-2" : "bg-surface"} flex flex-col justify-center`}>
               <Visual i={i} />
             </Tilt>
             <span className={`pt-2 text-[13px] font-medium tracking-wide uppercase ${i === 3 ? "text-orange-dark" : "text-muted"}`}>{d.time}</span>

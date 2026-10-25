@@ -1,13 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Galada, Hind_Siliguri, Inter, Inter_Tight } from "next/font/google";
+import { Hind_Siliguri, Outfit } from "next/font/google";
 import SmoothScroll from "@/components/providers/SmoothScroll";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-// Stand-in for Helvetica Now Display, which is used first when installed.
-const interTight = Inter_Tight({ subsets: ["latin"], variable: "--font-inter-tight" });
-const galada = Galada({ subsets: ["latin", "bengali"], weight: "400", variable: "--font-galada" });
-const hind = Hind_Siliguri({ subsets: ["latin", "bengali"], weight: ["400", "500", "600"], variable: "--font-hind" });
+const outfit = Outfit({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-outfit" });
+// Outfit has no Bengali glyphs, so Bangla text uses Hind Siliguri.
+const hind = Hind_Siliguri({ subsets: ["latin", "bengali"], weight: ["400", "500", "600", "700"], variable: "--font-hind" });
 
 export const metadata: Metadata = {
   title: "Beto POS — The AI POS for retail chains",
@@ -16,12 +14,12 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#17120E",
+  themeColor: "#FFFFFF",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${interTight.variable} ${galada.variable} ${hind.variable}`}>
+    <html lang="en" className={`${outfit.variable} ${hind.variable}`}>
       <body>
         <SmoothScroll>{children}</SmoothScroll>
       </body>

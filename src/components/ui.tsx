@@ -60,14 +60,19 @@ export function Tilt({ children, className, max = 7 }: { children: React.ReactNo
   );
 }
 
-export function Logo({ className, dark = true }: { className?: string; dark?: boolean }) {
+// BETO logo: charcoal mark with an orange pill, lowercase wordmark. "POS" sits beside it as a
+// descriptor so the logo itself is never altered.
+export function Logo({ className, variant = "full", pos = true }: { className?: string; variant?: "full" | "reversed"; pos?: boolean }) {
+  const reversed = variant === "reversed";
   return (
-    <span className={clsx("inline-flex items-center gap-2.5", className)}>
-      <span className="grid size-8 place-items-center rounded-[10px] bg-[#3a3c42]">
-        <span className="h-[12px] w-[20px] rounded-[4px] bg-orange shadow-[0_0_12px_rgba(255,122,26,0.7)]" />
+    <span className={clsx("inline-flex items-center gap-[7px]", className)}>
+      <span className={clsx("grid size-[30px] place-items-center rounded-[8px]", reversed ? "bg-white" : "bg-ink")}>
+        <span className="h-[12px] w-[19px] rounded-[4px] bg-orange" />
       </span>
-      <span className={clsx("font-display text-[21px] font-bold tracking-[-0.05em]", dark ? "text-white" : "text-ink")}>beto</span>
-      <span className="-ml-1 rounded-[5px] bg-orange px-1.5 py-0.5 font-display text-[11px] font-bold tracking-[0.04em] text-ink">POS</span>
+      <span className={clsx("font-display text-[30px] leading-none font-semibold tracking-[-0.045em]", reversed ? "text-white" : "text-ink")}>beto</span>
+      {pos && (
+        <span className={clsx("ml-2 border-l pl-2.5 font-display text-[13px] font-medium tracking-[0.16em]", reversed ? "border-white/25 text-white/80" : "border-line text-body")}>POS</span>
+      )}
     </span>
   );
 }
@@ -89,19 +94,21 @@ export function Reveal({ children, delay = 0, y = 28, className, ...rest }: HTML
 
 export function Eyebrow({ children, tone = "orange", dot }: { children: React.ReactNode; tone?: "orange" | "muted"; dot?: boolean }) {
   return (
-    <div className={clsx("eyebrow flex items-center gap-2", tone === "orange" ? "text-orange-dark" : "text-muted")}>
-      {dot && <span className="size-1.5 rounded-full bg-[#e5372b] animate-blink-dot" />}
+    <div className={clsx("eyebrow flex items-center gap-2.5", tone === "orange" ? "text-orange-dark" : "text-muted")}>
+      {dot && <span className="size-1.5 rounded-full bg-orange animate-blink-dot" />}
       {children}
+      <span className="h-px w-14 bg-current opacity-50" />
     </div>
   );
 }
 
 export function SectionTitle({ children, className }: { children: React.ReactNode; className?: string }) {
-  return (
-    <h2 className={clsx("font-display text-[40px] font-medium leading-[1.02] tracking-[-0.04em] sm:text-[52px] lg:text-[64px]", className)}>
-      {children}
-    </h2>
-  );
+  return <h2 className={clsx("headline text-[40px] leading-[1.04] sm:text-[52px] lg:text-[62px]", className)}>{children}</h2>;
+}
+
+// Accent phrase inside a headline, set in BETO Orange.
+export function Accent({ children }: { children: React.ReactNode }) {
+  return <span className="text-orange">{children}</span>;
 }
 
 export function Button({
@@ -111,25 +118,26 @@ export function Button({
   icon,
 }: {
   children: React.ReactNode;
-  variant?: "primary" | "ghost" | "dark";
+  variant?: "primary" | "secondary" | "tertiary" | "tertiary-dark";
   href?: string;
   icon?: React.ReactNode;
 }) {
   return (
     <Magnetic>
-    <motion.a
-      href={href}
-      whileTap={{ scale: 0.96 }}
-      className={clsx(
-        "inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-6 py-3.5 text-[13px] font-medium tracking-[0.08em] uppercase transition-colors",
-        variant === "primary" && "bg-orange text-ink hover:bg-[#ff8d3a]",
-        variant === "ghost" && "border border-white/60 text-white hover:bg-white/10",
-        variant === "dark" && "bg-ink text-white hover:bg-black",
-      )}
-    >
-      {icon}
-      {children}
-    </motion.a>
+      <motion.a
+        href={href}
+        whileTap={{ scale: 0.97 }}
+        className={clsx(
+          "inline-flex shrink-0 items-center gap-2 rounded-xl px-6 py-3.5 text-[15px] font-medium whitespace-nowrap transition-colors",
+          variant === "primary" && "bg-orange text-white hover:bg-orange-dark",
+          variant === "secondary" && "bg-ink text-white hover:bg-charcoal-2",
+          variant === "tertiary" && "border border-ink/30 text-ink hover:bg-soft",
+          variant === "tertiary-dark" && "border border-white/40 text-white hover:bg-white/10",
+        )}
+      >
+        {icon}
+        {children}
+      </motion.a>
     </Magnetic>
   );
 }

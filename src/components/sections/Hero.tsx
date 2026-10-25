@@ -29,15 +29,15 @@ export default function Hero() {
   const betoY = useTransform(scrollYProgress, [0, 1], [0, -60]);
 
   return (
-    <section id="top" ref={ref} className="tex-weave-dark relative overflow-hidden rounded-[20px] px-4 pt-6 sm:rounded-[28px] sm:px-8 sm:pt-7 lg:px-16">
+    <section id="top" ref={ref} className="bg-hero relative overflow-hidden rounded-[20px] border border-line px-4 pt-6 sm:rounded-[28px] sm:px-8 sm:pt-7 lg:px-16">
       <Nav />
 
       <div className="relative z-10 flex flex-col items-start gap-8 pt-14 sm:pt-16">
-        <h1 className="poster text-[40px] leading-[1.22] sm:text-[60px] lg:text-[76px]">
+        <h1 className="headline text-[42px] leading-[1.02] text-ink sm:text-[58px] lg:text-[72px] xl:max-w-[54%] xl:text-[80px]">
           {lines.map((l, i) => (
-            <span key={l.text} className="block overflow-hidden pb-1">
+            <span key={l.text} className="block overflow-hidden pb-[0.08em]">
               <motion.span
-                className={l.cream ? "poster-cream block" : "block"}
+                className={l.cream ? "block text-orange" : "block"}
                 initial={{ y: "110%", rotate: 2 }}
                 animate={{ y: 0, rotate: 0 }}
                 transition={{ duration: 1, delay: 0.15 + i * 0.14, ease: [0.22, 1, 0.36, 1] }}
@@ -54,17 +54,17 @@ export default function Hero() {
           className="flex flex-wrap gap-2.5"
         >
           <Button icon={<CalendarCheck size={16} />}>Book a demo</Button>
-          <Button variant="ghost" href="#story" icon={<Play size={14} fill="currentColor" />}>
+          <Button variant="tertiary" href="#story" icon={<Play size={14} fill="currentColor" />}>
             Watch the film
           </Button>
         </motion.div>
       </div>
 
       {/* The product stage: Beto sits on the Retail Console. */}
-      <div className="relative mt-[170px] sm:mt-[200px] lg:mt-24">
+      <div className="relative mt-[200px] sm:mt-[240px] xl:mt-24">
         <motion.div
           style={{ y: betoY }}
-          className="absolute right-[2%] bottom-full z-20 h-[276px] w-[240px] translate-y-[81px] sm:h-[300px] sm:w-[260px] sm:translate-y-[88px] lg:right-[3%] lg:h-[600px] lg:w-[520px] lg:translate-y-[176px]"
+          className="absolute right-[2%] bottom-full z-20 h-[276px] w-[240px] translate-y-[81px] sm:h-[300px] sm:w-[260px] sm:translate-y-[88px] xl:right-[3%] xl:h-[600px] xl:w-[520px] xl:translate-y-[176px]"
         >
           <Beto3D className="h-full w-full cursor-grab" />
         </motion.div>

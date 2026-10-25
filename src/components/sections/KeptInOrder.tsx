@@ -10,7 +10,7 @@ import { Eyebrow, Reveal, SectionTitle, Tilt } from "@/components/ui";
 const icons = [Tags, Link2, KeyRound, ReceiptText, ShoppingBag, Wallet];
 
 function Preview({ i }: { i: number }) {
-  const card = "flex w-full max-w-[460px] flex-col gap-5 rounded-[22px] bg-white p-6 shadow-[0_30px_60px_rgba(11,11,12,0.08)] sm:p-8";
+  const card = "flex w-full max-w-[460px] flex-col gap-5 rounded-[22px] bg-white p-6 shadow-[0_30px_60px_rgba(58,60,65,0.08)] sm:p-8";
   const head = (t: string, m: string) => (
     <div className="flex items-center justify-between">
       <span className="font-display text-[22px] font-medium tracking-[-0.015em]">{t}</span>
@@ -18,7 +18,7 @@ function Preview({ i }: { i: number }) {
     </div>
   );
   const row = (k: string, v: string, hi = false) => (
-    <div key={k} className="flex justify-between rounded-xl bg-[#f7f2e9] px-4 py-3 text-[14px]">
+    <div key={k} className="flex justify-between rounded-xl bg-[#F5F6F7] px-4 py-3 text-[14px]">
       <span>{k}</span>
       <span className={clsx("tabular-nums", hi && "font-semibold text-orange-dark")}>{v}</span>
     </div>
@@ -33,12 +33,12 @@ function Preview({ i }: { i: number }) {
           <span className="text-[15px] leading-[22px] text-body">Open Beto POS on the SUNMI device and enter this code. Prices, staff and stock arrive in seconds.</span>
           <div className="flex gap-2.5">
             {"47K29".split("").map((ch, j) => (
-              <motion.span key={j} initial={{ y: 12, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: j * 0.08 }} className={clsx("grid h-[72px] flex-1 place-items-center rounded-2xl font-display text-[36px] font-medium", j === 4 ? "border-2 border-orange bg-white" : "bg-[#f3f2ef]")}>
+              <motion.span key={j} initial={{ y: 12, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: j * 0.08 }} className={clsx("grid h-[72px] flex-1 place-items-center rounded-2xl font-display text-[36px] font-medium", j === 4 ? "border-2 border-orange bg-white" : "bg-[#F5F6F7]")}>
                 {ch}
               </motion.span>
             ))}
           </div>
-          <div className="flex justify-between border-t border-[#efefed] pt-3.5 text-[13px] text-muted"><span>Counter 3 · expires in 9:42</span><span className="font-medium text-orange-dark">Waiting for device…</span></div>
+          <div className="flex justify-between border-t border-[#E7E8EA] pt-3.5 text-[13px] text-muted"><span>Counter 3 · expires in 9:42</span><span className="font-medium text-orange-dark">Waiting for device…</span></div>
         </div>
       );
     case 2:
@@ -68,7 +68,7 @@ export default function KeptInOrder() {
                 onMouseEnter={() => setActive(i)}
                 onFocus={() => setActive(i)}
                 onClick={() => setActive(i)}
-                className={clsx("flex items-center gap-3 border-l-2 py-3 pl-4 text-left text-[17px] transition-colors sm:text-[18px]", i === active ? "border-orange text-ink" : "border-line text-[#8a8a90] hover:text-ink")}
+                className={clsx("flex items-center gap-3 border-l-2 py-3 pl-4 text-left text-[17px] transition-colors sm:text-[18px]", i === active ? "border-orange text-ink" : "border-line text-[#8B8D93] hover:text-ink")}
               >
                 <Icon size={17} className={i === active ? "text-orange-dark" : ""} />
                 <span className="font-display font-medium">{r.title}</span>
@@ -77,7 +77,7 @@ export default function KeptInOrder() {
           })}
         </div>
       </Reveal>
-      <Reveal delay={0.15} className="tex-weave-light relative flex min-h-[460px] flex-1 items-center justify-center overflow-hidden rounded-[28px] p-5 sm:min-h-[560px] sm:p-10">
+      <Reveal delay={0.15} className="bg-surface relative flex min-h-[460px] flex-1 items-center justify-center overflow-hidden rounded-[28px] p-5 sm:min-h-[560px] sm:p-10">
         <AnimatePresence mode="wait">
           <motion.div key={active} initial={{ opacity: 0, y: 24, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -16 }} transition={{ duration: 0.35 }} className="flex w-full justify-center">
             <Tilt className="flex w-full justify-center"><Preview i={active} /></Tilt>

@@ -35,11 +35,11 @@ export type Scene = {
   slate: string;
   bn: string;
   en: string;
-  pose: "standing" | "pointing" | "thinking" | "sleeping";
+  pose: "waving" | "pointing" | "thinking" | "sleeping";
 };
 
 export const scenes: Scene[] = [
-  { id: "01", time: "07:30", title: "The challan arrives", beat: "Two patties short. Beto POS flags it before anyone signs.", slate: "BOGURA SHOWROOM · 07:30 · DELIVERY", bn: "চালান এল। দুটো প্যাটি কম।", en: "The delivery came in two patties short.", pose: "standing" },
+  { id: "01", time: "07:30", title: "The challan arrives", beat: "Two patties short. Beto POS flags it before anyone signs.", slate: "BOGURA SHOWROOM · 07:30 · DELIVERY", bn: "চালান এল। দুটো প্যাটি কম।", en: "The delivery came in two patties short.", pose: "waving" },
   { id: "02", time: "11:42", title: "A bill is born", beat: "৳590, split bKash and cash. Receipt on WhatsApp.", slate: "BOGURA SHOWROOM · 11:42 · COUNTER 2", bn: "৳৫৯০ — বিকাশে ৪০০, নগদে ১৯০।", en: "৳590 — ৳400 by bKash, ৳190 in cash.", pose: "pointing" },
   { id: "03", time: "14:10", title: "The lights go out", beat: "Rangpur keeps selling. 12 bills wait in Beto POS's offline queue.", slate: "RANGPUR FRANCHISE · 14:10 · POWER CUT", bn: "বিদ্যুৎ চলে গেল। বিক্রি থামেনি।", en: "The power went out. The selling didn't.", pose: "pointing" },
   { id: "04", time: "14:52", title: "Back online", beat: "Every bill reaches head office. None lost.", slate: "RANGPUR FRANCHISE · 14:52 · SYNC", bn: "সংযোগ ফিরল। ১২টা বিল পৌঁছে গেল।", en: "Back online. All 12 bills arrived.", pose: "thinking" },
@@ -123,6 +123,109 @@ export const aiQA = [
   },
 ];
 
+export type Feature = { title: string; body: string; icon: string; tag?: string };
+export type FeatureGroup = { id: string; label: string; who: string; intro: string; features: Feature[] };
+
+export const featureGroups: FeatureGroup[] = [
+  {
+    id: "counter",
+    label: "Counter app",
+    who: "Cashiers · senior cashiers · outlet managers · store keepers",
+    intro: "The Bangla counter app runs on Android devices or in any web browser, and keeps selling with no internet.",
+    features: [
+      { icon: "KeyRound", title: "Staff sign in", body: "Every staff member signs in with their own PIN, even offline. Five wrong attempts lock the account until the manager unlocks it." },
+      { icon: "Clock", title: "Shift management", body: "Open a shift with the counted cash float. Close it with counted cash and the difference recorded. X Report for the open shift." },
+      { icon: "ScanBarcode", title: "Sales entry", body: "Add products by tile, search or barcode scan. Every tile shows stock level and expiry." },
+      { icon: "Percent", title: "Discount control", body: "Cashiers give discounts within their limit. Anything above needs a supervisor PIN." },
+      { icon: "Wallet", title: "Payment collection", body: "Cash with change calculation, card, bKash, Nagad, Rocket, Upay and split payments." },
+      { icon: "Printer", title: "Receipt printing", body: "The receipt prints the moment a bill is done. Reprints are clearly marked as duplicate." },
+      { icon: "Archive", title: "Automatic cash drawer", body: "The drawer opens on its own when a cash sale completes, on supported devices." },
+      { icon: "PauseCircle", title: "Bill hold and void", body: "Put a bill on hold and resume it later. Every void asks for confirmation." },
+      { icon: "Undo2", title: "Refunds", body: "Refund per item, marked good or damaged, with a mandatory reason and a printed refund slip." },
+      { icon: "ShoppingBag", title: "Customer orders", body: "Take orders with a deposit. Hand over when the balance is collected." },
+      { icon: "MoonStar", title: "Day close", body: "Outlet-level day close — blocked while any other counter still has an open shift." },
+      { icon: "UserCog", title: "Manager mode", body: "Demand requests, challan receiving by scan, daily stock count, label printing, returns to depot and cash handover." },
+      { icon: "Activity", title: "Alerts and diagnostics", body: "Manager alerts, plus a System page that checks device, printer, scanner and drawer — with one-tap copy for support." },
+      { icon: "WifiOff", title: "Offline operation", body: "Sales, refunds, shifts and counts save on the device and send in sequence when the connection returns." },
+      { icon: "MonitorSmartphone", title: "Responsive layouts", body: "Layouts for handheld, tablet and desktop. Desktop shortcuts: F2 search, F9 payment, F4 hold." },
+      { icon: "Languages", title: "Bangla interface", body: "Counter screens in Bangla, with Bangla text printed on receipts." },
+    ],
+  },
+  {
+    id: "payments",
+    label: "Payments",
+    who: "Cashiers · accounts team",
+    intro: "Customers pay on the provider's own machine or merchant number. Beto POS records every reference so accounts can reconcile against bank and wallet statements.",
+    features: [
+      { icon: "Banknote", title: "Cash", tag: "Amount received, change, shift drawer cash", body: "The cashier counts cash and gives change. The drawer opens." },
+      { icon: "CreditCard", title: "Card", tag: "Amount and approval code", body: "Processed on the bank's own card machine at the counter." },
+      { icon: "Smartphone", title: "bKash, Nagad, Rocket, Upay", tag: "Amount and transaction ID (TrxID)", body: "The customer pays the outlet's merchant number from their phone." },
+      { icon: "Split", title: "Split payment", tag: "Each part with its own reference", body: "Any combination of the above on a single bill." },
+    ],
+  },
+  {
+    id: "drawer",
+    label: "Cash drawer",
+    who: "Cashiers · outlet managers · head office",
+    intro: "Cash is only reachable through a recorded sale. On SUNMI desktop terminals the drawer is wired straight to the printer.",
+    features: [
+      { icon: "Cable", title: "Direct connection", body: "A standard RJ11 or RJ12 cable to the printer drawer port of the SUNMI T2s or D2s Plus. No driver, no pairing — the device powers the drawer." },
+      { icon: "Inbox", title: "Opens on cash sale", body: "The receipt prints and the drawer opens automatically when a cash bill is completed." },
+      { icon: "Gauge", title: "Drawer test and state", body: "Test the drawer from the System page and see whether it is open or closed." },
+      { icon: "ShieldAlert", title: "Cash control per shift", body: "Float counted at shift open; counted cash and difference recorded at close. Gaps above the outlet's tolerance alert the manager and head office." },
+    ],
+  },
+  {
+    id: "console",
+    label: "Retail Console",
+    who: "Head office · outlet managers · accounts · franchise owners",
+    intro: "Operations, inventory, finance and administration from any browser, on a phone or a computer.",
+    features: [
+      { icon: "CalendarCheck", title: "Daily operations", body: "Today view, bills, customer orders, shifts and day close." },
+      { icon: "Boxes", title: "Inventory", body: "Demand, receiving, returns, stock by batch, daily stock count and opening stock." },
+      { icon: "Tag", title: "Labels", body: "Print 50 × 30 mm product labels from the back-office computer." },
+      { icon: "QrCode", title: "Products and prices", body: "Maintain products, prices, barcodes and batch QR codes." },
+      { icon: "Coins", title: "Cash and settlement", body: "Cash handover, settlement, commission and outstanding balances." },
+      { icon: "FileChartColumn", title: "Financial reporting", body: "Remittance, commission, settlement and outlet reports." },
+      { icon: "BarChart3", title: "Reports and monitoring", body: "Operational reports, alerts and a sync monitor." },
+      { icon: "Settings2", title: "Outlet configuration", body: "Outlet code and type, cashier discount limit, cash tolerance per shift, return window, near-expiry warning days, end-of-day stock count, franchise credit limit, receipt footer, stock location and return depot." },
+      { icon: "Users", title: "Administration", body: "Manage terminals, users, roles and setup — and revoke a lost or stolen device instantly." },
+      { icon: "Building2", title: "Head office view", body: "Every outlet in one view: performance, daily operations and alerts." },
+      { icon: "Store", title: "Franchise owner access", body: "Franchise owners see sales, cash and settlement on their own phone." },
+    ],
+  },
+  {
+    id: "server",
+    label: "Server & sync",
+    who: "IT · accounts · support team",
+    intro: "One central Retail Server connects every counter and the Retail Console. No local server needed at any outlet.",
+    features: [
+      { icon: "Server", title: "Central Retail Server", body: "A hosted server connects all counters and the Retail Console." },
+      { icon: "RefreshCw", title: "Data synchronisation", body: "Counters sync about every 20 seconds when online, and can trade a full day offline." },
+      { icon: "Link2", title: "Terminal pairing", body: "Each device is paired with a unique terminal ID and a token issued once from the Retail Console." },
+      { icon: "Globe", title: "Web counter", body: "A browser counter on any computer or phone — always on the latest version." },
+      { icon: "Download", title: "App distribution", body: "Install and update from the Beto POS download page, with release notes for every version." },
+      { icon: "BookOpen", title: "ERP account posting", body: "Retail sales, refunds and cash post straight to your ERP accounts." },
+      { icon: "BellRing", title: "Automated alerts", body: "Day not closed, shift open over 14 hours, counter idle for 30 minutes, cash difference over tolerance, stock count difference." },
+      { icon: "Sun", title: "Daily summary", body: "High-priority alerts and a 22:00 daily summary sent to the support team and the Retail Console." },
+    ],
+  },
+];
+
+export const devices = [
+  { device: "SUNMI or equivalent Android POS", os: "Android 7.0+", print: "Built-in, direct printing", scan: "Scan head, USB or Bluetooth", drawer: "Automatic on cash sale (desktop models)", ok: true },
+  { device: "Other Android phones and tablets", os: "Android 7.0+", print: "Android print dialog", scan: "USB or Bluetooth (keyboard mode)", drawer: "Not supported", ok: false },
+  { device: "Windows or Mac with Chrome", os: "Web counter", print: "Browser print dialog", scan: "USB scanner", drawer: "Not supported", ok: false },
+];
+
+export const peripherals = [
+  { name: "Receipt paper", req: "58 mm or 80 mm thermal rolls to match the device" },
+  { name: "Barcode scanner", req: "2D imager, USB or Bluetooth in keyboard (HID) mode, sending Enter after each scan. Reads barcodes and batch QR codes." },
+  { name: "Cash drawer", req: "RJ11 or RJ12 cable to the SUNMI desktop printer port" },
+  { name: "Label printer", req: "Thermal label printer for 50 × 30 mm labels, from Chrome on the back-office computer" },
+  { name: "Card machine", req: "Any bank card machine — the cashier records its approval code" },
+];
+
 export const rollout = [
   { week: "Week 1", title: "Set up head office", body: "Import products and the price list. Create stores, roles and staff PINs." },
   { week: "Week 2", title: "Pilot one showroom", body: "Pair its counters with a code. We train cashiers on site, in Bangla." },
@@ -131,8 +234,11 @@ export const rollout = [
 ];
 
 export const faqs = [
-  { q: "What happens when the internet goes down?", a: "Counters keep billing. Bills wait in a queue on the device and sync on their own when the connection is back. Head office sees how long each counter was offline." },
-  { q: "Do we need new hardware?", a: "Beto POS runs on SUNMI handhelds, Android tablets and phones, and in any web browser. Most chains start on the devices they already have." },
+  { q: "What happens when the internet goes down?", a: "Counters keep billing for a full day if needed. Sales, refunds, shifts and stock counts wait on the device and sync in order when the connection is back — no local server required. Online, counters sync about every 20 seconds." },
+  { q: "Do we need new hardware?", a: "Beto POS runs on SUNMI or equivalent Android POS devices, any Android phone or tablet on Android 7.0 or later, and in Chrome on Windows or Mac. Most chains start on the devices they already have." },
+  { q: "Which payments can the counter take?", a: "Cash with change calculation, card on your bank's card machine, bKash, Nagad, Rocket and Upay to your merchant number, and split payments. Every payment is recorded with its approval code or TrxID so accounts can reconcile." },
+  { q: "Does the cash drawer open by itself?", a: "Yes, on SUNMI T2s and D2s Plus desktop terminals. Plug the drawer into the printer port with a standard RJ11 or RJ12 cable — no driver or pairing — and it opens when a cash sale completes." },
+  { q: "What if a device is lost or stolen?", a: "Revoke it from the Retail Console and it is cut off immediately. Every counter is paired with its own terminal ID and a one-time token." },
   { q: "Can we move our products and prices from the old POS?", a: "Yes. We import your product list and prices during week one, then publish one price list to every store." },
   { q: "How do franchise owners see their numbers?", a: "Each owner gets their own view of sales, settlement with head office, commission and cash sent — and nothing from other stores." },
   { q: "Who can give discounts or void a bill?", a: "Head office sets the limits per role. Anything above a cashier's limit needs a supervisor PIN, and every void asks for confirmation and is logged." },

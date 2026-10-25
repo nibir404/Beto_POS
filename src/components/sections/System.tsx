@@ -40,9 +40,9 @@ function Link({ top, bottom, delay = 0 }: { top: string; bottom: string; delay?:
     <div className="relative flex min-w-0 flex-1 flex-col items-center gap-2.5 py-4 lg:py-0">
       <span className="text-[12px] font-medium text-muted">{top}</span>
       <div className="relative h-0.5 w-px self-stretch overflow-hidden max-lg:mx-auto max-lg:h-12 max-lg:w-0.5 lg:w-full">
-        <div className="absolute inset-0 bg-[repeating-linear-gradient(90deg,#ff7a1a_0_8px,transparent_8px_14px)] max-lg:bg-[repeating-linear-gradient(180deg,#ff7a1a_0_8px,transparent_8px_14px)]" />
+        <div className="absolute inset-0 bg-[repeating-linear-gradient(90deg,#EE8139_0_8px,transparent_8px_14px)] max-lg:bg-[repeating-linear-gradient(180deg,#EE8139_0_8px,transparent_8px_14px)]" />
         <motion.span
-          className="absolute top-1/2 left-0 size-2 -translate-y-1/2 rounded-full bg-orange shadow-[0_0_10px_#ff7a1a] max-lg:left-1/2 max-lg:-translate-x-1/2"
+          className="absolute top-1/2 left-0 size-2 -translate-y-1/2 rounded-full bg-orange shadow-[0_0_10px_#EE8139] max-lg:left-1/2 max-lg:-translate-x-1/2"
           animate={{ left: ["0%", "100%"] }}
           transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut", delay }}
         />
@@ -60,7 +60,7 @@ export default function System() {
         <SectionTitle>Built for chains, not single tills.</SectionTitle>
       </Reveal>
 
-      <Reveal delay={0.1} className="tex-weave-light mt-14 flex flex-col items-stretch rounded-[28px] p-5 sm:p-8 lg:flex-row lg:items-center lg:p-12">
+      <Reveal delay={0.1} className="bg-surface mt-14 flex flex-col items-stretch rounded-[28px] p-5 sm:p-8 lg:flex-row lg:items-center lg:p-12">
         <div className="flex flex-col gap-3 lg:w-[300px] lg:shrink-0">
           <span className="eyebrow text-muted">Counter app · 62 devices</span>
           {devices.map((d, i) => (
@@ -71,9 +71,9 @@ export default function System() {
               viewport={{ once: true }}
               transition={{ delay: 0.2 + i * 0.1 }}
               whileHover={{ x: 4 }}
-              className="flex items-center gap-3.5 rounded-2xl bg-[#fffdf8] p-4"
+              className="flex items-center gap-3.5 rounded-2xl bg-[#FFFFFF] p-4"
             >
-              <span className="grid size-11 shrink-0 place-items-center rounded-lg bg-tobacco-3 text-cream">
+              <span className="grid size-11 shrink-0 place-items-center rounded-lg bg-charcoal-3 text-cream">
                 <d.icon size={20} />
               </span>
               <span className="flex flex-1 flex-col">
@@ -93,7 +93,7 @@ export default function System() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="flex flex-col gap-3.5 rounded-[22px] bg-tobacco p-6 shadow-[0_30px_60px_rgba(23,18,14,0.25)]"
+          className="flex flex-col gap-3.5 rounded-[22px] bg-charcoal-2 p-6 shadow-[0_30px_60px_rgba(58,60,65,0.25)]"
         >
           <div className="flex items-center justify-between">
             <span className="eyebrow text-glow">Central retail service</span>
@@ -108,7 +108,7 @@ export default function System() {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.5 + i * 0.08 }}
-                className="flex justify-between rounded-[10px] bg-[#241d17] px-3 py-2.5 text-[14px] text-cream"
+                className="flex justify-between rounded-[10px] bg-[#4A4C52] px-3 py-2.5 text-[14px] text-cream"
               >
                 <span>{k}</span>
                 <span className="text-muted">{v}</span>
@@ -130,7 +130,7 @@ export default function System() {
               viewport={{ once: true }}
               transition={{ delay: 0.4 + i * 0.1 }}
               whileHover={{ x: -4 }}
-              className="flex items-center gap-3 rounded-2xl bg-[#fffdf8] p-4"
+              className="flex items-center gap-3 rounded-2xl bg-[#FFFFFF] p-4"
             >
               <r.icon size={18} className="shrink-0 text-orange-dark" />
               <span className="flex flex-col">

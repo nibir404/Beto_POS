@@ -32,6 +32,11 @@ npm run build
 
 All copy and demo figures are in `src/lib/content.ts`. **The figures are demo data — replace them before launch.**
 
-## Fonts
+## Brand
 
-Headings use **Helvetica Now Display** when it is installed, falling back to Inter Tight. To ship Helvetica Now Display to every visitor, add its licensed web font files with `next/font/local`.
+Follows the BETO Brand Identity Guidelines 2026.
+
+- **Type:** Outfit (Bold headings, SemiBold subheadings, Medium titles and buttons, Regular body). Bangla text uses Hind Siliguri, since Outfit has no Bengali glyphs.
+- **Colour:** BETO Orange `#EE8139`, BETO Charcoal `#3A3C41`, White, Soft Gray `#F5F6F7`, Gray `#E7E8EA` — tokens in `src/app/globals.css`. Aim for 70% white/charcoal, 20% grays, 10% orange.
+- **Logo:** `Logo` in `src/components/ui.tsx` — full colour on light, `variant="reversed"` on dark. "POS" is a separate descriptor; never restyle the mark or wordmark.
+- **Mascot:** use only the approved states (thinking, waving, pointing, sleeping, TV mode, …).

@@ -6,7 +6,7 @@ import { AnimatePresence, motion, useInView } from "framer-motion";
 import { ArrowUp, BrainCircuit, Languages, LineChart, Sparkles } from "lucide-react";
 import clsx from "clsx";
 import { aiQA } from "@/lib/content";
-import { Eyebrow } from "@/components/ui";
+import { Accent, Eyebrow } from "@/components/ui";
 
 function useTyped(text: string, run: boolean, speed = 18) {
   const [out, setOut] = useState("");
@@ -46,13 +46,13 @@ export default function BetoAI() {
   }, [q, inView]);
 
   return (
-    <section id="ai" ref={ref} className="tex-weave-dark relative overflow-hidden rounded-[20px] px-4 py-20 sm:rounded-[28px] sm:px-8 lg:px-16 lg:py-28">
+    <section id="ai" ref={ref} className="bg-dark relative overflow-hidden rounded-[20px] px-4 py-20 sm:rounded-[28px] sm:px-8 lg:px-16 lg:py-28">
       <div className="pointer-events-none absolute top-1/2 right-[18%] size-[520px] -translate-y-1/2 rounded-full bg-orange/10 blur-[120px]" />
       <div className="relative flex flex-col gap-14 lg:flex-row lg:items-center lg:gap-20">
         <div className="flex flex-col gap-6 lg:w-[46%]">
-          <Eyebrow>04 — Beto POS AI</Eyebrow>
-          <h2 className="poster text-[42px] leading-[1.2] sm:text-[60px] lg:text-[72px]">Ask your chain anything.</h2>
-          <p className="max-w-[440px] text-[17px] leading-7 text-[#bdb3a6]">Beto POS AI reads every store&apos;s live sales, stock and settlements. Head office and franchise owners get answers, not spreadsheets.</p>
+          <Eyebrow>05 — Beto POS AI</Eyebrow>
+          <h2 className="headline text-[40px] leading-[1.04] text-white sm:text-[56px] lg:text-[68px]">Ask your chain <Accent>anything.</Accent></h2>
+          <p className="max-w-[440px] text-[17px] leading-7 text-[#C4C6CB]">Beto POS AI reads every store&apos;s live sales, stock and settlements. Head office and franchise owners get answers, not spreadsheets.</p>
 
           <div className="flex flex-col gap-2 pt-2">
             {aiQA.map((x, i) => (
@@ -61,7 +61,7 @@ export default function BetoAI() {
                 onClick={() => setQ(i)}
                 className={clsx(
                   "flex items-center gap-3 self-start rounded-full border px-4 py-3 text-left text-[15px] font-medium transition-colors",
-                  i === q ? "border-orange bg-orange text-ink" : "border-[rgba(255,236,210,0.18)] text-cream hover:border-glow",
+                  i === q ? "border-orange bg-orange text-ink" : "border-[rgba(255,255,255,0.18)] text-cream hover:border-glow",
                 )}
               >
                 <Sparkles size={15} /> {x.q}
@@ -82,9 +82,9 @@ export default function BetoAI() {
 
         {/* Chat */}
         <div className="relative flex-1">
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="relative flex min-h-[460px] flex-col gap-3.5 rounded-[22px] border border-[rgba(255,236,210,0.08)] bg-[#211a14] p-5 sm:p-8">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="relative flex min-h-[460px] flex-col gap-3.5 rounded-[22px] border border-[rgba(255,255,255,0.08)] bg-[#2F3135] p-5 sm:p-8">
             <div className="flex items-center gap-2.5 border-b border-white/10 pb-4">
-              <span className="relative grid size-9 place-items-center overflow-hidden rounded-full bg-[#f5f5f5]">
+              <span className="relative grid size-9 place-items-center overflow-hidden rounded-full bg-[#F5F6F7]">
                 <Image src="/beto/beto-thinking.png" alt="" width={36} height={80} className="mt-6 scale-[1.6]" />
               </span>
               <span className="flex flex-col">
@@ -122,7 +122,7 @@ export default function BetoAI() {
               </motion.div>
             </AnimatePresence>
 
-            <div className="mt-auto flex items-center gap-2 rounded-full border border-white/10 bg-[#17120e] py-2 pr-2 pl-4 text-[14px] text-muted">
+            <div className="mt-auto flex items-center gap-2 rounded-full border border-white/10 bg-[#3A3C41] py-2 pr-2 pl-4 text-[14px] text-muted">
               <span className="flex-1 truncate">Ask in Bangla or English…</span>
               <span className="grid size-9 place-items-center rounded-full bg-orange text-ink"><ArrowUp size={16} /></span>
             </div>
@@ -132,7 +132,7 @@ export default function BetoAI() {
           <div className="pointer-events-none absolute -bottom-8 -left-14 hidden h-[230px] w-[110px] sm:block">
             <AnimatePresence mode="wait">
               <motion.div key={phase} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="relative h-full w-full">
-                <Image src={phase === "thinking" ? "/beto/beto-thinking.png" : "/beto/beto-standing.png"} alt="" fill sizes="110px" className="object-contain object-bottom" />
+                <Image src={phase === "thinking" ? "/beto/beto-thinking.png" : "/beto/beto-pointing.png"} alt="" fill sizes="110px" className="object-contain object-bottom" />
               </motion.div>
             </AnimatePresence>
           </div>

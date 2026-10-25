@@ -16,7 +16,7 @@ export function Rollout() {
     <section className="px-4 py-24 sm:px-8 lg:px-16 lg:py-32">
       <Reveal className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
         <div className="flex flex-col gap-4">
-          <Eyebrow>05 — Rollout</Eyebrow>
+          <Eyebrow>06 — Rollout</Eyebrow>
           <SectionTitle className="max-w-[640px]">One store this month. Every store next.</SectionTitle>
         </div>
         <p className="max-w-[320px] text-[16px] leading-6 text-body">We start where it&apos;s hardest, then copy it to the rest of the chain.</p>
@@ -44,7 +44,7 @@ export function FAQ() {
   return (
     <section id="faq" className="flex flex-col gap-10 px-4 pb-24 sm:px-8 lg:flex-row lg:gap-20 lg:px-16 lg:pb-32">
       <Reveal className="flex flex-col gap-4 lg:w-[400px] lg:shrink-0">
-        <Eyebrow>06 — Questions</Eyebrow>
+        <Eyebrow>07 — Questions</Eyebrow>
         <SectionTitle className="!text-[40px] sm:!text-[56px]">What chains ask us first.</SectionTitle>
       </Reveal>
       <div className="flex-1 border-t border-ink">
@@ -74,23 +74,23 @@ export function CTA() {
   const [sent, setSent] = useState(false);
   const [value, setValue] = useState("");
   return (
-    <section id="demo" className="tex-weave-dark flex flex-col gap-24 rounded-[20px] px-4 pt-20 pb-10 sm:rounded-[28px] sm:px-8 lg:gap-32 lg:px-16 lg:pt-28">
+    <section id="demo" className="bg-dark flex flex-col gap-24 rounded-[20px] px-4 pt-20 pb-10 sm:rounded-[28px] sm:px-8 lg:gap-32 lg:px-16 lg:pt-28">
       <div className="flex flex-col items-center gap-6 text-center">
         <motion.div initial={{ opacity: 0, y: 30, rotate: -6 }} whileInView={{ opacity: 1, y: 0, rotate: 0 }} viewport={{ once: true }} transition={{ type: "spring", stiffness: 120 }} className="relative h-[170px] w-[122px] sm:h-[210px] sm:w-[150px]">
           <Image src="/beto/beto-waving.png" alt="Beto waving" fill sizes="150px" className="object-contain" />
         </motion.div>
         <Reveal>
-          <h2 className="poster font-bangla text-[52px] leading-[1.35] sm:text-[88px] lg:text-[120px]" style={{ fontFamily: "var(--font-galada)" }}>
-            সব দোকান, এক হিসাব
+          <h2 className="font-bangla text-[48px] leading-[1.3] font-bold text-white sm:text-[80px] lg:text-[108px]">
+            সব দোকান, <span className="text-orange">এক হিসাব</span>
           </h2>
         </Reveal>
-        <p className="max-w-[480px] text-[18px] leading-7 text-[#c9c9ce]">See Beto POS running in a showroom and a franchise, then we&apos;ll set up a pilot in your stores.</p>
+        <p className="max-w-[480px] text-[18px] leading-7 text-[#C4C6CB]">See Beto POS running in a showroom and a franchise, then we&apos;ll set up a pilot in your stores.</p>
         <form
           onSubmit={(e) => {
             e.preventDefault();
             if (value.trim()) setSent(true);
           }}
-          className="flex w-full max-w-[480px] items-center gap-2 rounded-full border border-white/20 bg-white/5 py-1.5 pr-1.5 pl-5"
+          className="flex w-full max-w-[480px] items-center gap-2 rounded-2xl border border-white/20 bg-white/5 py-1.5 pr-1.5 pl-5"
         >
           <AnimatePresence mode="wait">
             {sent ? (
@@ -98,19 +98,19 @@ export function CTA() {
                 <Check size={18} className="text-ok" /> Booked. The Beto POS team will call you within a day.
               </motion.span>
             ) : (
-              <motion.input key="in" value={value} onChange={(e) => setValue(e.target.value)} placeholder="Work email or phone" aria-label="Work email or phone" className="min-w-0 flex-1 bg-transparent py-3 text-[15px] text-white placeholder:text-[#a59a8c] focus:outline-none" />
+              <motion.input key="in" value={value} onChange={(e) => setValue(e.target.value)} placeholder="Work email or phone" aria-label="Work email or phone" className="min-w-0 flex-1 bg-transparent py-3 text-[15px] text-white placeholder:text-[#A3A5AB] focus:outline-none" />
             )}
           </AnimatePresence>
           {!sent && (
-            <button type="submit" className="flex items-center gap-2 rounded-full bg-orange px-5 py-3.5 text-[12px] font-semibold tracking-[0.08em] whitespace-nowrap text-ink uppercase">
+            <button type="submit" className="flex items-center gap-2 rounded-xl bg-orange px-5 py-3.5 text-[15px] font-medium whitespace-nowrap text-white transition-colors hover:bg-orange-dark">
               Book a demo <ArrowRight size={15} />
             </button>
           )}
         </form>
       </div>
       <footer className="flex flex-col justify-between gap-8 border-t border-white/10 pt-8 lg:flex-row lg:items-end">
-        <Logo className="origin-left scale-[2.6] pb-2 sm:scale-[3.2]" />
-        <div className="flex flex-wrap gap-x-8 gap-y-3 text-[12px] font-medium tracking-[0.08em] text-[#a8a8ae] uppercase">
+        <Logo variant="reversed" className="origin-left scale-[1.6] pb-2 sm:scale-[2]" />
+        <div className="flex flex-wrap gap-x-8 gap-y-3 text-[12px] font-medium tracking-[0.08em] text-[#A3A5AB] uppercase">
           <span>Betopia Limited</span>
           <a href="#story" className="flex items-center gap-1.5 hover:text-white"><PlayCircle size={14} /> Watch the film</a>
           <a href="#" className="flex items-center gap-1.5 hover:text-white"><Share2 size={14} /> Facebook</a>

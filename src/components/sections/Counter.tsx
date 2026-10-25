@@ -58,7 +58,7 @@ export default function Counter() {
         </button>
       </Reveal>
 
-      <Reveal delay={0.1} className="tex-weave-light relative mt-10 flex flex-col gap-4 rounded-[24px] p-3 sm:p-5 lg:flex-row lg:p-6">
+      <Reveal delay={0.1} className="bg-surface relative mt-10 flex flex-col gap-4 rounded-[24px] p-3 sm:p-5 lg:flex-row lg:p-6">
         <div className="hidden w-[60px] shrink-0 flex-col items-center gap-2 py-2 lg:flex">
           {[LayoutGrid, ScanBarcode, PauseCircle, Settings].map((I, i) => (
             <span key={i} className={clsx("grid size-11 place-items-center rounded-xl", i === 0 ? "bg-orange text-ink" : "bg-white text-body")}>
@@ -70,7 +70,7 @@ export default function Counter() {
         {/* Catalog */}
         <div className="flex min-w-0 flex-1 flex-col gap-4 rounded-[18px] bg-white p-4 sm:p-6">
           <div className="flex gap-2.5">
-            <div className="flex flex-1 items-center gap-2.5 rounded-xl bg-[#f4f4f2] px-4 py-3 text-[15px] text-muted">
+            <div className="flex flex-1 items-center gap-2.5 rounded-xl bg-[#F5F6F7] px-4 py-3 text-[15px] text-muted">
               <Search size={16} /> Search or scan barcode…
             </div>
             <button className="flex items-center gap-2 rounded-xl bg-ink px-4 text-[12px] font-medium text-white">
@@ -79,7 +79,7 @@ export default function Counter() {
           </div>
           <div className="flex gap-2 overflow-x-auto text-[12px] font-medium [scrollbar-width:none]">
             {["All", "Cakes", "Bakery", "Sweets", "Snacks"].map((c, i) => (
-              <span key={c} className={clsx("shrink-0 rounded-full px-3.5 py-2", i ? "bg-[#f4f4f2]" : "bg-ink text-white")}>{c}</span>
+              <span key={c} className={clsx("shrink-0 rounded-full px-3.5 py-2", i ? "bg-[#F5F6F7]" : "bg-ink text-white")}>{c}</span>
             ))}
           </div>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -89,7 +89,7 @@ export default function Counter() {
                 whileHover={{ y: -3 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => add(p.name, p.price)}
-                className="flex flex-col gap-1.5 rounded-[14px] border border-[#e4e4e2] p-3 text-left transition-colors hover:border-orange"
+                className="flex flex-col gap-1.5 rounded-[14px] border border-[#E7E8EA] p-3 text-left transition-colors hover:border-orange"
               >
                 <span className="grid h-[72px] place-items-center rounded-[10px] sm:h-[90px]" style={{ background: p.tint }}>
                   <Plus size={18} className="text-ink/30" />
@@ -114,11 +114,11 @@ export default function Counter() {
             <AnimatePresence initial={false}>
               {lines.map((l) => (
                 <motion.div key={l.name} layout initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden">
-                  <div className="flex items-center gap-2 border-b border-[#efefed] py-2.5 text-[15px]">
+                  <div className="flex items-center gap-2 border-b border-[#E7E8EA] py-2.5 text-[15px]">
                     <span className="flex-1">{l.name}</span>
-                    <button onClick={() => dec(l.name)} aria-label={`Remove one ${l.name}`} className="grid size-6 place-items-center rounded-full bg-[#f4f4f2] hover:bg-line"><Minus size={12} /></button>
+                    <button onClick={() => dec(l.name)} aria-label={`Remove one ${l.name}`} className="grid size-6 place-items-center rounded-full bg-[#F5F6F7] hover:bg-line"><Minus size={12} /></button>
                     <span className="w-5 text-center tabular-nums">{l.qty}</span>
-                    <button onClick={() => add(l.name, l.price)} aria-label={`Add one ${l.name}`} className="grid size-6 place-items-center rounded-full bg-[#f4f4f2] hover:bg-line"><Plus size={12} /></button>
+                    <button onClick={() => add(l.name, l.price)} aria-label={`Add one ${l.name}`} className="grid size-6 place-items-center rounded-full bg-[#F5F6F7] hover:bg-line"><Plus size={12} /></button>
                     <span className="w-16 text-right tabular-nums">{fmt(l.price * l.qty)}</span>
                   </div>
                 </motion.div>
@@ -134,7 +134,7 @@ export default function Counter() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 onClick={() => add("Mishti Doi", 150)}
-                className="flex items-start gap-2 rounded-xl bg-[#fff6da] px-3.5 py-3 text-left text-[13px] leading-[19px]"
+                className="flex items-start gap-2 rounded-xl bg-[#FDEEE4] px-3.5 py-3 text-left text-[13px] leading-[19px]"
               >
                 <Sparkles size={15} className="mt-0.5 shrink-0 text-orange-dark" />
                 <span><b className="font-semibold">Beto POS AI:</b> customers who buy Rasmalai usually add Mishti Doi. Add it?</span>
@@ -142,7 +142,7 @@ export default function Counter() {
             )}
           </AnimatePresence>
 
-          <button onClick={() => setSplit((s) => !s)} className="flex items-center justify-between rounded-xl border border-[#efefed] px-3.5 py-2.5 text-[13px]">
+          <button onClick={() => setSplit((s) => !s)} className="flex items-center justify-between rounded-xl border border-[#E7E8EA] px-3.5 py-2.5 text-[13px]">
             <span className="flex items-center gap-2"><Wallet size={15} /> Split payment</span>
             <span className={clsx("relative h-5 w-9 rounded-full transition-colors", split ? "bg-orange" : "bg-line")}>
               <motion.span layout className={clsx("absolute top-0.5 size-4 rounded-full bg-white shadow", split ? "right-0.5" : "left-0.5")} />
@@ -151,7 +151,7 @@ export default function Counter() {
           {split && total > 0 && (
             <div className="flex gap-1 text-[12px]">
               <div className="flex-[68] rounded-md bg-bkash px-2 py-1 text-white">bKash {fmt(bkash)}</div>
-              <div className="flex flex-[32] items-center gap-1 rounded-md bg-[#f4f4f2] px-2 py-1"><Banknote size={12} />{fmt(total - bkash)}</div>
+              <div className="flex flex-[32] items-center gap-1 rounded-md bg-[#F5F6F7] px-2 py-1"><Banknote size={12} />{fmt(total - bkash)}</div>
             </div>
           )}
 
@@ -163,7 +163,7 @@ export default function Counter() {
             <motion.button whileTap={{ scale: 0.97 }} onClick={charge} disabled={!total} className="flex flex-1 items-center justify-center gap-2 rounded-[14px] bg-orange py-4 text-[13px] font-semibold tracking-[0.08em] uppercase disabled:opacity-40">
               <Printer size={16} /> Charge
             </motion.button>
-            <button onClick={() => setLines([])} className="rounded-[14px] bg-[#f4f4f2] px-4 text-[13px] font-semibold tracking-[0.08em] uppercase">Hold</button>
+            <button onClick={() => setLines([])} className="rounded-[14px] bg-[#F5F6F7] px-4 text-[13px] font-semibold tracking-[0.08em] uppercase">Hold</button>
           </div>
 
           {/* Printed receipt */}
@@ -176,11 +176,11 @@ export default function Counter() {
                 exit={{ opacity: 0, y: 20 }}
                 transition={{ duration: 1.1, ease: "linear" }}
                 onClick={() => setReceipt(null)}
-                className="absolute top-full right-4 left-4 z-10 -mt-2 cursor-pointer bg-white px-5 pt-4 pb-5 text-center text-[12px] shadow-[0_20px_40px_rgba(23,18,14,0.2)] lg:right-6 lg:left-6"
+                className="absolute top-full right-4 left-4 z-10 -mt-2 cursor-pointer bg-white px-5 pt-4 pb-5 text-center text-[12px] shadow-[0_20px_40px_rgba(58,60,65,0.2)] lg:right-6 lg:left-6"
               >
                 <div className="font-semibold tracking-[0.1em]">BETO POS · BOGURA SHOWROOM</div>
                 <div className="text-muted">COUNTER 2 · INV #0{receipt.no}</div>
-                <div className="my-2 border-t border-dashed border-[#bdbdc2]" />
+                <div className="my-2 border-t border-dashed border-[#C4C6CB]" />
                 <div className="flex justify-between text-[14px] font-semibold"><span>TOTAL</span><span>{fmt(receipt.total)}</span></div>
                 <div className="mt-1 text-orange-dark">{offline ? "Saved offline · will sync ✓" : "Paid · receipt sent on WhatsApp ✓"}</div>
                 <div className="mt-2 text-[11px] text-muted">dhonnobad · tap to close</div>
