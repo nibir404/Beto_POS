@@ -17,15 +17,13 @@ const Beto3D = dynamic(() => import("@/components/three/Beto3D"), {
 });
 
 const lines = [
-  { text: "Every counter. Every store.", cream: false },
-  { text: "One set of numbers.", cream: false },
-  { text: "Beto POS keeps count.", cream: true },
+  { text: "Every store.", cream: false },
+  { text: "One set of numbers.", cream: true },
 ];
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const consoleY = useTransform(scrollYProgress, [0, 1], [0, -120]);
   const betoY = useTransform(scrollYProgress, [0, 1], [0, -60]);
 
   return (
@@ -33,7 +31,7 @@ export default function Hero() {
       <Nav />
 
       <div className="relative z-10 flex flex-col items-start gap-8 pt-14 sm:pt-16">
-        <h1 className="headline text-[42px] leading-[1.02] text-ink sm:text-[58px] lg:text-[72px] xl:max-w-[54%] xl:text-[80px]">
+        <h1 className="headline text-[42px] leading-[1.02] text-ink sm:text-[64px] lg:text-[80px] xl:max-w-[62%] xl:text-[88px]">
           {lines.map((l, i) => (
             <span key={l.text} className="block overflow-hidden pb-[0.08em]">
               <motion.span
@@ -69,11 +67,10 @@ export default function Hero() {
           <Beto3D className="h-full w-full cursor-grab" />
         </motion.div>
         <motion.div
-          style={{ y: consoleY }}
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="relative z-10 h-[440px] sm:h-[560px] lg:h-[620px]"
+          className="relative z-10"
         >
           <Console />
         </motion.div>
